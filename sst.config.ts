@@ -5,12 +5,15 @@ import { execSync } from "child_process";
 export default $config({
   app(input) {
     return {
-      name: "hello-zero",
+      name: "lock-in",
       removal: input?.stage === "production" ? "retain" : "remove",
       home: "aws",
-      region: process.env.AWS_REGION || "us-east-1",
+      region: process.env.AWS_REGION || "us-west-1",
       providers: {
         command: true,
+        aws: {
+          profile: "spinach-dev",
+        },
       },
     };
   },
@@ -18,6 +21,9 @@ export default $config({
     const zeroVersion = execSync("npm show @rocicorp/zero version")
       .toString()
       .trim();
+
+    // GPX bucket
+    const gpxBucket = new sst.aws.Bucket(`gpx-bucket`);
 
     // S3 Bucket
     const replicationBucket = new sst.aws.Bucket(`replication-bucket`);
@@ -154,7 +160,7 @@ export default $config({
         // Wait for replication-manager to come up first, for breaking changes
         // to replication-manager interface.
         dependsOn: [replicationManager],
-      }
+      },
     );
 
     // Update permissions
@@ -169,7 +175,7 @@ export default $config({
         },
       },
       // after the view-syncer is deployed.
-      { dependsOn: viewSyncer }
+      { dependsOn: viewSyncer },
     );
   },
 });

@@ -5,13 +5,9 @@
 
 declare module "sst" {
   export interface Resource {
-    "PostgresConnectionString": {
-      "type": "sst.sst.Secret"
-      "value": string
-    }
-    "ZeroAuthSecret": {
-      "type": "sst.sst.Secret"
-      "value": string
+    "gpx-bucket": {
+      "name": string
+      "type": "sst.aws.Bucket"
     }
     "replication-bucket": {
       "name": string

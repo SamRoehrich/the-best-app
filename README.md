@@ -32,3 +32,7 @@ yourself.
 - File Viewer
 - Teams
 - Segments
+
+## AWS
+
+login: https://spinach-aws-admin.awsapps.com/start

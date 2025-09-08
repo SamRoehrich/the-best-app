@@ -20,6 +20,15 @@ import {
   json,
 } from "@rocicorp/zero";
 
+const gpx = table("gpx")
+  .columns({
+    id: string(),
+    user: string().from("user_id"),
+    timestamp: number(),
+    file: string(),
+  })
+  .primaryKey("id");
+
 const message = table("message")
   .columns({
     id: string(),
@@ -77,12 +86,12 @@ type AuthData = {
 export const permissions = definePermissions<AuthData, Schema>(schema, () => {
   const allowIfLoggedIn = (
     authData: AuthData,
-    { cmpLit }: ExpressionBuilder<Schema, keyof Schema["tables"]>
+    { cmpLit }: ExpressionBuilder<Schema, keyof Schema["tables"]>,
   ) => cmpLit(authData.sub, "IS NOT", null);
 
   const allowIfMessageSender = (
     authData: AuthData,
-    { cmp }: ExpressionBuilder<Schema, "message">
+    { cmp }: ExpressionBuilder<Schema, "message">,
   ) => cmp("senderID", "=", authData.sub ?? "");
 
   return {

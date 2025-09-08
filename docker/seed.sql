@@ -18,6 +18,13 @@ CREATE TABLE "message" (
   "timestamp" TIMESTAMP not null
 );
 
+CREATE TABLE "gpx" (
+  "id" VARCHAR PRIMARY KEY,
+  "user_id" VARCHAR REFERENCES "user"(id),
+  "timestamp" TIMESTAMP not null,
+  "file" VARCHAR not null
+);
+
 INSERT INTO "user" (id, name, partner) VALUES ('ycD76wW4R2', 'Aaron', true);
 INSERT INTO "user" (id, name, partner) VALUES ('IoQSaxeVO5', 'Matt', true);
 INSERT INTO "user" (id, name, partner) VALUES ('WndZWmGkO4', 'Cesar', true);
